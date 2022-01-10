@@ -1,35 +1,43 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ItemsService } from './items.service';
 import { ItemType } from './dto/create-item.dto';
 import { ItemInput } from './dto/input-items.input';
 import { Item } from './interfaces/item.interface';
+import {
+  Get,
+  Patch,
+  Delete,
+  Post,
+  Controller,
+  Body,
+  Param,
+} from '@nestjs/common';
 
-@Resolver(() => ItemType)
-export class ItemsResolver {
+@Controller('items')
+export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
-  @Query(() => [ItemType])
+  @Get()
   async getItems(): Promise<ItemType[]> {
     return this.itemsService.findAll();
   }
 
-  @Query(() => ItemType)
-  async getItem(@Args('id') id: string): Promise<ItemType> {
+  @Get(':id')
+  async getItem(@Param('id') id: string): Promise<ItemType> {
     return this.itemsService.findOne(id);
   }
 
-  @Mutation(() => ItemType)
-  async createItem(@Args('input') input: ItemInput): Promise<ItemType> {
+  @Post()
+  async createItem(@Body() input: ItemInput): Promise<ItemType> {
     return this.itemsService.create(input);
   }
 
-  @Mutation(() => ItemType)
-  async updateItem(@Args('id') id: string, @Args('input') input: ItemInput) {
+  @Patch(':id')
+  async updateItem(@Param('id') id: string, @Body() input: ItemInput) {
     return this.itemsService.update(id, input as Item);
   }
 
-  @Mutation(() => ItemType)
-  async deleteItem(@Args('id') id: string) {
+  @Delete(':id')
+  async deleteItem(@Param('id') id: string) {
     return this.itemsService.delete(id);
   }
 }

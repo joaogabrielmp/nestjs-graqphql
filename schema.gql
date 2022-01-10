@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type ItemType {
+type Item {
   id: ID!
   title: String!
   price: Int!
@@ -10,18 +10,18 @@ type ItemType {
 }
 
 type Query {
-  getItems: [ItemType!]!
-  getItem(id: String!): ItemType!
+  getItems: [Item!]!
+  getItem(id: String!): Item!
 }
 
 type Mutation {
-  createItem(input: ItemInput!): ItemType!
-  updateItem(input: ItemInput!, id: String!): ItemType!
-  deleteItem(id: String!): ItemType!
+  createItem(input: ItemInput!): Item!
+  updateItem(input: ItemInput!, id: String!): Item!
+  deleteItem(id: String!): Item!
 }
 
 input ItemInput {
   title: String!
-  price: Int!
+  price: Float!
   description: String!
 }

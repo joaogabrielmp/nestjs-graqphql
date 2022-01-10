@@ -1,22 +1,16 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
-@ObjectType()
+@ObjectType('Item')
 export class ItemType {
-  @Field(() => ID)
-  @IsString()
-  readonly id?: string;
+  @Field(() => ID, { name: 'id' })
+  readonly _id?: string;
 
-  @Field()
-  @IsString()
-  @IsNotEmpty()
+  @Field(() => String)
   readonly title: string;
 
   @Field(() => Int)
-  @IsNumber()
   readonly price: number;
 
-  @Field()
-  @IsString()
+  @Field(() => String)
   readonly description: string;
 }
